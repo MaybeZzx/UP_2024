@@ -5,17 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:service"
         mc:Ignorable="d"
-        Title="MainMenu" Height="341" Width="700" WindowStartupLocation="CenterScreen"
-        Loaded="Window_Loaded" >
+        Title="MainMenu" Height="350" Width="715" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" MinWidth="715" MinHeight="350" >
     <Grid Background="#FF171717">
-        <DataGrid x:Name="dataGrid1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,25,0,0" Background="{x:Null}" MinColumnWidth="50" MaxColumnWidth="500" ColumnWidth="Auto" MinWidth="700" CanUserSortColumns="False" CanUserReorderColumns="False"/>
-        <Button x:Name="btnTake" Content="Взять" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Click="btnTake_Click"/>
-        <Button x:Name="btnLogs" Content="История" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="168,0,0,0" Click="btnLogs_Click"/>
-        <Button x:Name="btnUsers" Content="Пользователи" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="252,0,0,0"/>
+        <DataGrid x:Name="dataGrid1" Margin="0,25,0,0" Background="{x:Null}" MinColumnWidth="70" MaxColumnWidth="500" ColumnWidth="*" MinWidth="700" CanUserSortColumns="False" CanUserReorderColumns="False" AutoGenerateColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Категория" Binding="{Binding Path='categoryName'}" IsReadOnly="True" Width="100"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Path='name'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Количество" Binding="{Binding Path='count'}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path='price'}" IsReadOnly="True" />
+                <DataGridTemplateColumn Header="Удалить" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnDelete" Content="Delete" Click="btnDelete_Click" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnTake" Content="Взять" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Click="btnTake_Click" FontSize="14"/>
+        <Button x:Name="btnLogs" Content="История" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="168,0,0,0" Click="btnLogs_Click" FontSize="14"/>
+        <Button x:Name="btnUsers" Content="Пользователи" HorizontalAlignment="Left" VerticalAlignment="Top" Width="116" Height="25" Margin="252,0,0,0" Click="btnUsers_Click" FontSize="14"/>
         <WrapPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="60" Margin="0,0,716,349"/>
-        <Button x:Name="btnReturn" Content="Вернуть" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Margin="84,0,0,0" Click="btnReturn_Click"/>
-        <Button x:Name="btnAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="336,0,0,0"/>
-        <TextBox x:Name="txtBox_Search" HorizontalAlignment="Left" Margin="420,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="25" Text="Поиск" FontSize="15" GotFocus="txtBox_Search_GotFocus" Foreground="#FF565656" LostFocus="txtBox_Search_LostFocus" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Button x:Name="btnReturn" Content="Вернуть" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Margin="84,0,0,0" Click="btnReturn_Click" FontSize="14"/>
+        <Button x:Name="btnAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="368,0,0,0" Click="btnAdd_Click" FontSize="14"/>
+        <TextBox x:Name="txtBox_Search" HorizontalAlignment="Left" Margin="452,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="248" Height="25" Text="Поиск" FontSize="15" GotFocus="txtBox_Search_GotFocus" Foreground="#FF828282" LostFocus="txtBox_Search_LostFocus" Background="{x:Null}" BorderBrush="{x:Null}" TextChanged="txtBox_Search_TextChanged"/>
 
     </Grid>
 </Window>

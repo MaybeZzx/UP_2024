@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:service"
         mc:Ignorable="d"
-        Title="Добавление" Height="236" Width="385" ResizeMode="NoResize">
+        Title="Добавление" Height="236" Width="397" ResizeMode="NoResize">
     <Grid>
         <Label Content="Категория" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="16"/>
         <Label Content="Название" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" FontSize="16"/>
@@ -16,6 +16,7 @@
         <TextBox x:Name="txtBox_price" HorizontalAlignment="Left" Margin="125,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" Height="25" FontSize="14"/>
         <Button x:Name="btnConfirm" Content="Подтвердить" HorizontalAlignment="Left" Margin="250,112,0,0" VerticalAlignment="Top" Height="30" Width="119" Click="btnConfirm_Click"/>
         <Button x:Name="btnCancel" Content="Отмена" HorizontalAlignment="Left" Margin="250,155,0,0" VerticalAlignment="Top" Height="30" Width="119" Click="btnCancel_Click"/>
-        
+        <ComboBox x:Name="cmbBox_category" HorizontalAlignment="Left" Margin="125,16,0,0" VerticalAlignment="Top" Width="250" Height="25"/>
+
     </Grid>
 </Window>

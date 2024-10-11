@@ -65,8 +65,8 @@ namespace service
         {
             if (txtBox_Search.Text == "Поиск")
             {
+                txtBox_Search.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FFFFFFFF");
                 txtBox_Search.Text = "";
-                txtBox_Search.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF000000");
             }
         }
 
@@ -75,7 +75,7 @@ namespace service
             if (txtBox_Search.Text == "")
             {
                 txtBox_Search.Text = "Поиск";
-                txtBox_Search.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF565656");
+                txtBox_Search.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#FF828282");
             }
         }
 
@@ -121,6 +121,10 @@ namespace service
                 }
                 connection.Close();
             }
+        }
+        public void UpdateP()
+        {
+            Update();
         }
         public void UpdateIf(string tableName, string prompt) //prompt = "SET example = example - 1 WHERE name = \"example\" "
         {
@@ -181,7 +185,7 @@ namespace service
             {
                 string connectionString = "server=127.0.0.1; port=3306; userid=admin; password=Qwerty2006; database=autoservice; sslmode=none; AllowPublicKeyRetrieval=true;";
                 string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                MessageBox.Show(currentTime);
+                MessageBox.Show("Успешно!");
                 string sql = $"INSERT logs(who, action, count, what, time) VALUES (\"{name}\", \"{action}\", {count}, \"{itemName}\", \"{currentTime}\") ";
                 //MessageBox.Show(sql);
                 using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -205,22 +209,92 @@ namespace service
             if (selectedItem != null)
             {
                 string name = dt.DefaultView[dataGrid1.SelectedIndex][1].ToString();
-
-                UpdateIf("autoparts", $"count = count - 1 WHERE name = \"{name}\"");
-                AddLog(m_login, "взял", name, 1);
+                int count = int.Parse(dt.DefaultView[dataGrid1.SelectedIndex][2].ToString());
+                if (count > 0)
+                {
+                    UpdateIf("autoparts", $"count = count - 1 WHERE name = \"{name}\"");
+                    AddLog(m_login, "взял", name, 1);
+                }
+                else
+                {
+                    MessageBox.Show("Данной позиции нет на складе!");
+                }
             }
+            else
+            {
+                MessageBox.Show("Выбрана пустая позиция!");
+            }
+            Update();
         }
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             ReturnWindow returnWindow = new ReturnWindow(m_login);
             returnWindow.Owner = this;
             returnWindow.ShowDialog();
+            Update();
         }
 
         private void btnLogs_Click(object sender, RoutedEventArgs e)
         {
             History history = new History();
             history.Show();
+            Update();
+        }
+
+        private void txtBox_Search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (txtBox_Search.Text != "Поиск")
+            {
+                DataView dv = dt.DefaultView;
+                dv.RowFilter = string.Format($"name  like '{txtBox_Search.Text}%'");
+            }
+        }
+
+        private void btnUsers_Click(object sender, RoutedEventArgs e)
+        {
+            Users users = new Users();
+            users.Show();
+            Update();
+        }
+
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Add add= new Add(); 
+            add.Owner = this;
+            add.Show();
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(m_login == "admin"))
+            {
+                MessageBox.Show("Недостаточно прав!");
+                return;
+            }
+            DataTable dt1 = new DataTable();
+
+            dt1 = dt;
+            int index = dataGrid1.SelectedIndex;
+            string name = Convert.ToString(dt1.DefaultView[index]["name"]);
+            int count = Convert.ToInt32(dt1.DefaultView[index]["count"]);
+
+            DataRow b = dt1.Rows[index];
+            dt1.Rows.Remove(b);
+            dataGrid1.ItemsSource = dt1.DefaultView;
+            string Connect = "server=127.0.0.1; port=3306; userid=admin; password=Qwerty2006; database=autoservice; sslmode=none; AllowPublicKeyRetrieval=true;";
+            string sql = $"delete FROM autoparts where name=\"{name}\";";
+            MySqlConnection connection = new MySqlConnection(Connect);
+            
+            connection.Open();
+            MySqlCommand command = new MySqlCommand(sql, connection);
+            command.ExecuteNonQuery();
+            connection.Close();
+            AddLog(m_login, "удалил", name, count);
+        }
+
+        private void Main_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            dbg.Content = Main.Width;
         }
     }
 }
