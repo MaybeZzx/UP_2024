@@ -1,0 +1,21 @@
+﻿<Window x:Name="Main" x:Class="service.MainMenu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:service"
+        mc:Ignorable="d"
+        Title="MainMenu" Height="341" Width="700" WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" >
+    <Grid Background="#FF171717">
+        <DataGrid x:Name="dataGrid1" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,25,0,0" Background="{x:Null}" MinColumnWidth="50" MaxColumnWidth="500" ColumnWidth="Auto" MinWidth="700" CanUserSortColumns="False" CanUserReorderColumns="False"/>
+        <Button x:Name="btnTake" Content="Взять" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Click="btnTake_Click"/>
+        <Button x:Name="btnLogs" Content="История" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="168,0,0,0"/>
+        <Button x:Name="btnUsers" Content="Пользователи" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="252,0,0,0"/>
+        <WrapPanel Orientation="Vertical" VerticalAlignment="Bottom" Height="60" Margin="0,0,716,349"/>
+        <Button x:Name="btnReturn" Content="Вернуть" HorizontalAlignment="Left" Width="84" Height="25" VerticalAlignment="Top" Margin="84,0,0,0" Click="btnReturn_Click"/>
+        <Button x:Name="btnAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="84" Height="25" Margin="336,0,0,0"/>
+        <TextBox x:Name="txtBox_Search" HorizontalAlignment="Left" Margin="420,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" Height="25" Text="Поиск" FontSize="15" GotFocus="txtBox_Search_GotFocus" Foreground="#FF565656" LostFocus="txtBox_Search_LostFocus" Background="{x:Null}" BorderBrush="{x:Null}"/>
+
+    </Grid>
+</Window>

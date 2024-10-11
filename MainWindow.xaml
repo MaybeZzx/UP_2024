@@ -1,0 +1,38 @@
+﻿<Window x:Class="service.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:service"
+        mc:Ignorable="d"
+        Title="Авторизация" Height="300" Width="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FF171717">
+        <TextBox x:Name="txtBox_login" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Логин" VerticalAlignment="Top" Width="202" Background="{x:Null}" BorderBrush="{x:Null}" CaretBrush="White" GotFocus="txtBox_GotFocus" LostFocus="txtBox_login_LostFocus" Height="30" FontSize="20" Foreground="White" MaxLength="17" Margin="0,73,0,0" >
+            <TextBox.SelectionBrush>
+                <SolidColorBrush Color="#FFA2A2A2" Opacity="0.75"/>
+            </TextBox.SelectionBrush>
+            <TextBox.Template>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <ScrollViewer x:Name="PART_ContentHost"/>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+
+        <Rectangle HorizontalAlignment="Center" Height="1" Margin="0,103,0,0" Stroke="#FF949494" VerticalAlignment="Top" Width="202"/>
+        <Rectangle HorizontalAlignment="Center" Height="1" Margin="0,147,0,0" Stroke="#FF949494" VerticalAlignment="Top" Width="202"/>
+        <PasswordBox x:Name="passBox" HorizontalAlignment="Center" Margin="0,117,0,0" Width="202" Background="{x:Null}" BorderBrush="{x:Null}" CaretBrush="White" FontSize="20" Foreground="White" MaxLength="17" Height="30" VerticalAlignment="Top" PasswordChar="*" Password="***" GotFocus="passBox_GotFocus">
+            <PasswordBox.SelectionBrush>
+                <SolidColorBrush Color="#FFA2A2A2" Opacity="0.75"/>
+            </PasswordBox.SelectionBrush>
+        </PasswordBox>
+        <Button x:Name="btnLogin" Content="Вход" HorizontalAlignment="Center" Margin="0,182,0,0" VerticalAlignment="Top" Width="86" Height="30" Padding="1,1,1,1" BorderThickness="1,1,1,1" RenderTransformOrigin="0.5,0.5" BorderBrush="{x:Null}" Foreground="White" Background="#FF6D1717" FontSize="15" MouseEnter="Button_MouseEnter" MouseLeave="Button_MouseLeave" Click="btnLogin_Click">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label x:Name="lblAlert" Content="Неверный логин или пароль!" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Width="202" Foreground="Red" FontSize="14" Visibility="Hidden"/>
+
+    </Grid>
+</Window>
