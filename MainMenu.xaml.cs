@@ -177,22 +177,25 @@ namespace service
         public void AddLog(string login, string action, string itemName, int count)
         {
             string name = getUserName(login);
-            string connectionString = "server=127.0.0.1; port=3306; userid=admin; password=Qwerty2006; database=autoservice; sslmode=none; AllowPublicKeyRetrieval=true;";
-            string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            MessageBox.Show(currentTime);
-            string sql = $"INSERT logs(who, action, count, what, time) VALUES (\"{name}\", \"{action}\", {count}, \"{itemName}\", \"{currentTime}\") ";
-            //MessageBox.Show(sql);
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            if (name != "")
             {
-                connection.Open();
-                using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                string connectionString = "server=127.0.0.1; port=3306; userid=admin; password=Qwerty2006; database=autoservice; sslmode=none; AllowPublicKeyRetrieval=true;";
+                string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                MessageBox.Show(currentTime);
+                string sql = $"INSERT logs(who, action, count, what, time) VALUES (\"{name}\", \"{action}\", {count}, \"{itemName}\", \"{currentTime}\") ";
+                //MessageBox.Show(sql);
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                    da.Fill(dt);
-                    dataGrid1.DataContext = dt;
-                    dataGrid1.ItemsSource = dt.DefaultView;
+                    connection.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(sql, connection))
+                    {
+                        MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                        da.Fill(dt);
+                        dataGrid1.DataContext = dt;
+                        dataGrid1.ItemsSource = dt.DefaultView;
+                    }
+                    connection.Close();
                 }
-                connection.Close();
             }
         }
 
@@ -204,14 +207,20 @@ namespace service
                 string name = dt.DefaultView[dataGrid1.SelectedIndex][1].ToString();
 
                 UpdateIf("autoparts", $"count = count - 1 WHERE name = \"{name}\"");
+                AddLog(m_login, "взял", name, 1);
             }
-
         }
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
             ReturnWindow returnWindow = new ReturnWindow(m_login);
             returnWindow.Owner = this;
             returnWindow.ShowDialog();
+        }
+
+        private void btnLogs_Click(object sender, RoutedEventArgs e)
+        {
+            History history = new History();
+            history.Show();
         }
     }
 }
